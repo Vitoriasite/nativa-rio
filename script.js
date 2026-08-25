@@ -1,80 +1,280 @@
-// MENU MOBILE
-
-const menuButton = document.getElementById("menuButton");
-const mobileMenu = document.getElementById("mobileMenu");
-
-menuButton.addEventListener("click", () => {
-
-    mobileMenu.classList.toggle("active");
-
-});
+/* =====================================================
+   NATIVA RIO — V2
+   ===================================================== */
 
 
-// FECHAR MENU AO CLICAR
+/* =====================================================
+   HEADER
+===================================================== */
 
-const mobileLinks = document.querySelectorAll(".mobile-menu a");
+const header = document.getElementById("header");
+
+
+function updateHeader() {
+
+    if (window.scrollY > 30) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
+
+    }
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateHeader,
+    { passive: true }
+);
+
+
+updateHeader();
+
+
+
+/* =====================================================
+   MENU MOBILE
+===================================================== */
+
+const menuToggle =
+    document.getElementById("menuToggle");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+
+function closeMenu() {
+
+    mobileMenu.classList.remove("active");
+
+    document.body.classList.remove("menu-open");
+
+}
+
+
+menuToggle.addEventListener(
+    "click",
+    () => {
+
+        mobileMenu.classList.toggle("active");
+
+        document.body.classList.toggle(
+            "menu-open"
+        );
+
+    }
+);
+
+
+
+/* FECHAR AO CLICAR EM LINK */
+
+const mobileLinks =
+    document.querySelectorAll(
+        ".mobile-menu a"
+    );
+
 
 mobileLinks.forEach(link => {
 
-    link.addEventListener("click", () => {
-
-        mobileMenu.classList.remove("active");
-
-    });
+    link.addEventListener(
+        "click",
+        closeMenu
+    );
 
 });
 
 
-// ANIMAÇÕES AO ROLAR
 
-const revealElements = document.querySelectorAll(".reveal");
+/* =====================================================
+   REVEAL AO ROLAR
+===================================================== */
 
-const observer = new IntersectionObserver(
+const revealElements =
+    document.querySelectorAll(".reveal");
 
-    (entries) => {
 
-        entries.forEach(entry => {
+const revealObserver =
+    new IntersectionObserver(
 
-            if (entry.isIntersecting) {
+        entries => {
 
-                entry.target.classList.add("visible");
+            entries.forEach(entry => {
 
-                observer.unobserve(entry.target);
+                if (entry.isIntersecting) {
 
-            }
+                    entry.target.classList.add(
+                        "visible"
+                    );
 
-        });
+                    revealObserver.unobserve(
+                        entry.target
+                    );
 
-    },
+                }
 
-    {
-        threshold: 0.12
-    }
+            });
 
-);
+        },
+
+        {
+            threshold: 0.12,
+            rootMargin: "0px 0px -40px 0px"
+        }
+
+    );
 
 
 revealElements.forEach(element => {
 
-    observer.observe(element);
+    revealObserver.observe(element);
 
 });
 
 
-// HEADER AO ROLAR
 
-const header = document.querySelector(".header");
+/* =====================================================
+   PARALLAX LEVE NO HERO
+===================================================== */
 
-window.addEventListener("scroll", () => {
+const heroProduct =
+    document.querySelector(
+        ".hero-product"
+    );
 
-    if (window.scrollY > 40) {
 
-        header.style.boxShadow = "0 8px 30px rgba(0,0,0,.05)";
+if (heroProduct && window.innerWidth > 900) {
 
-    } else {
+    window.addEventListener(
+        "mousemove",
+        event => {
 
-        header.style.boxShadow = "none";
+            const x =
+                (event.clientX /
+                    window.innerWidth -
+                    .5) * 10;
+
+
+            const y =
+                (event.clientY /
+                    window.innerHeight -
+                    .5) * 8;
+
+
+            heroProduct.style.transform =
+                `translate(${x}px, ${y}px) rotate(-3deg)`;
+
+        },
+        { passive: true }
+    );
+
+}
+
+
+
+/* =====================================================
+   ANO AUTOMÁTICO
+===================================================== */
+
+const year =
+    document.querySelector(
+        ".footer-bottom span:nth-child(2)"
+    );
+
+
+if (year) {
+
+    year.textContent =
+        `© ${new Date().getFullYear()} NATIVA RIO`;
+
+}
+
+
+
+/* =====================================================
+   FECHAR MENU AO REDIMENSIONAR
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (window.innerWidth > 700) {
+
+            closeMenu();
+
+        }
 
     }
+);
+
+
+
+/* =====================================================
+   ANIMAÇÃO DOS CARDS DE DNA
+===================================================== */
+
+const dnaItems =
+    document.querySelectorAll(
+        ".dna-item"
+    );
+
+
+dnaItems.forEach(
+    (item, index) => {
+
+        item.style.transitionDelay =
+            `${index * 80}ms`;
+
+    }
+);
+
+
+
+/* =====================================================
+   ANIMAÇÃO DOS PASSOS
+===================================================== */
+
+const steps =
+    document.querySelectorAll(
+        ".step"
+    );
+
+
+steps.forEach(
+    (step, index) => {
+
+        step.style.transitionDelay =
+            `${index * 80}ms`;
+
+    }
+);
+
+
+
+/* =====================================================
+   PREVENIR CLIQUES VAZIOS
+===================================================== */
+
+const emptyLinks =
+    document.querySelectorAll(
+        'a[href="#"]'
+    );
+
+
+emptyLinks.forEach(link => {
+
+    link.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+        }
+    );
 
 });
