@@ -1,18 +1,19 @@
-/* =====================================================
-   NATIVA RIO — V2
-   ===================================================== */
+/* ==========================================================
+   NATIVA RIO — V3
+========================================================== */
 
 
-/* =====================================================
+/* ==========================================================
    HEADER
-===================================================== */
+========================================================== */
 
-const header = document.getElementById("header");
+const header =
+    document.getElementById("header");
 
 
 function updateHeader() {
 
-    if (window.scrollY > 30) {
+    if (window.scrollY > 35) {
 
         header.classList.add("scrolled");
 
@@ -36,31 +37,35 @@ updateHeader();
 
 
 
-/* =====================================================
+/* ==========================================================
    MENU MOBILE
-===================================================== */
+========================================================== */
 
-const menuToggle =
-    document.getElementById("menuToggle");
+const menuButton =
+    document.getElementById("menuButton");
 
 const mobileMenu =
     document.getElementById("mobileMenu");
 
 
-function closeMenu() {
+function closeMobileMenu() {
 
     mobileMenu.classList.remove("active");
 
-    document.body.classList.remove("menu-open");
+    document.body.classList.remove(
+        "menu-open"
+    );
 
 }
 
 
-menuToggle.addEventListener(
+menuButton.addEventListener(
     "click",
-    () => {
+    function () {
 
-        mobileMenu.classList.toggle("active");
+        mobileMenu.classList.toggle(
+            "active"
+        );
 
         document.body.classList.toggle(
             "menu-open"
@@ -70,103 +75,122 @@ menuToggle.addEventListener(
 );
 
 
-
-/* FECHAR AO CLICAR EM LINK */
-
 const mobileLinks =
     document.querySelectorAll(
         ".mobile-menu a"
     );
 
 
-mobileLinks.forEach(link => {
+mobileLinks.forEach(
+    function (link) {
 
-    link.addEventListener(
-        "click",
-        closeMenu
-    );
+        link.addEventListener(
+            "click",
+            closeMobileMenu
+        );
 
-});
+    }
+);
 
 
 
-/* =====================================================
-   REVEAL AO ROLAR
-===================================================== */
+/* ==========================================================
+   REVEAL
+========================================================== */
 
 const revealElements =
-    document.querySelectorAll(".reveal");
+    document.querySelectorAll(
+        ".reveal"
+    );
 
 
 const revealObserver =
     new IntersectionObserver(
 
-        entries => {
+        function (entries) {
 
-            entries.forEach(entry => {
+            entries.forEach(
+                function (entry) {
 
-                if (entry.isIntersecting) {
+                    if (
+                        entry.isIntersecting
+                    ) {
 
-                    entry.target.classList.add(
-                        "visible"
-                    );
+                        entry.target.classList.add(
+                            "visible"
+                        );
 
-                    revealObserver.unobserve(
-                        entry.target
-                    );
+                        revealObserver.unobserve(
+                            entry.target
+                        );
+
+                    }
 
                 }
-
-            });
+            );
 
         },
 
         {
-            threshold: 0.12,
-            rootMargin: "0px 0px -40px 0px"
+            threshold: .12,
+
+            rootMargin:
+                "0px 0px -40px 0px"
+
         }
 
     );
 
 
-revealElements.forEach(element => {
+revealElements.forEach(
+    function (element) {
 
-    revealObserver.observe(element);
+        revealObserver.observe(
+            element
+        );
 
-});
+    }
+);
 
 
 
-/* =====================================================
-   PARALLAX LEVE NO HERO
-===================================================== */
+/* ==========================================================
+   PARALLAX DO PRODUTO
+========================================================== */
 
-const heroProduct =
+const heroImage =
     document.querySelector(
-        ".hero-product"
+        ".hero-image"
     );
 
 
-if (heroProduct && window.innerWidth > 900) {
+if (
+    heroImage &&
+    window.innerWidth > 900
+) {
 
     window.addEventListener(
         "mousemove",
-        event => {
+        function (event) {
 
             const x =
-                (event.clientX /
+                (
+                    event.clientX /
                     window.innerWidth -
-                    .5) * 10;
+                    .5
+                ) * 7;
 
 
             const y =
-                (event.clientY /
+                (
+                    event.clientY /
                     window.innerHeight -
-                    .5) * 8;
+                    .5
+                ) * 5;
 
 
-            heroProduct.style.transform =
-                `translate(${x}px, ${y}px) rotate(-3deg)`;
+            heroImage.style.transform =
+                `translate(${x}px, ${y}px) rotate(-4deg)`;
 
         },
         { passive: true }
@@ -176,68 +200,9 @@ if (heroProduct && window.innerWidth > 900) {
 
 
 
-/* =====================================================
-   ANO AUTOMÁTICO
-===================================================== */
-
-const year =
-    document.querySelector(
-        ".footer-bottom span:nth-child(2)"
-    );
-
-
-if (year) {
-
-    year.textContent =
-        `© ${new Date().getFullYear()} NATIVA RIO`;
-
-}
-
-
-
-/* =====================================================
-   FECHAR MENU AO REDIMENSIONAR
-===================================================== */
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (window.innerWidth > 700) {
-
-            closeMenu();
-
-        }
-
-    }
-);
-
-
-
-/* =====================================================
-   ANIMAÇÃO DOS CARDS DE DNA
-===================================================== */
-
-const dnaItems =
-    document.querySelectorAll(
-        ".dna-item"
-    );
-
-
-dnaItems.forEach(
-    (item, index) => {
-
-        item.style.transitionDelay =
-            `${index * 80}ms`;
-
-    }
-);
-
-
-
-/* =====================================================
+/* ==========================================================
    ANIMAÇÃO DOS PASSOS
-===================================================== */
+========================================================== */
 
 const steps =
     document.querySelectorAll(
@@ -246,7 +211,7 @@ const steps =
 
 
 steps.forEach(
-    (step, index) => {
+    function (step, index) {
 
         step.style.transitionDelay =
             `${index * 80}ms`;
@@ -256,25 +221,135 @@ steps.forEach(
 
 
 
-/* =====================================================
-   PREVENIR CLIQUES VAZIOS
-===================================================== */
+/* ==========================================================
+   ANIMAÇÃO DNA
+========================================================== */
 
-const emptyLinks =
+const dnaCards =
     document.querySelectorAll(
-        'a[href="#"]'
+        ".dna-card"
     );
 
 
-emptyLinks.forEach(link => {
+dnaCards.forEach(
+    function (card, index) {
 
-    link.addEventListener(
-        "click",
-        event => {
+        card.style.transitionDelay =
+            `${index * 90}ms`;
 
-            event.preventDefault();
+    }
+);
+
+
+
+/* ==========================================================
+   ANO AUTOMÁTICO
+========================================================== */
+
+const copyright =
+    document.getElementById(
+        "copyright"
+    );
+
+
+if (copyright) {
+
+    copyright.textContent =
+        `© ${new Date().getFullYear()} NATIVA RIO`;
+
+}
+
+
+
+/* ==========================================================
+   FECHAR MENU AO REDIMENSIONAR
+========================================================== */
+
+window.addEventListener(
+    "resize",
+    function () {
+
+        if (window.innerWidth > 700) {
+
+            closeMobileMenu();
 
         }
+
+    }
+);
+
+
+
+/* ==========================================================
+   SCROLL SUAVE PARA LINKS
+========================================================== */
+
+const internalLinks =
+    document.querySelectorAll(
+        'a[href^="#"]'
     );
 
-});
+
+internalLinks.forEach(
+    function (link) {
+
+        link.addEventListener(
+            "click",
+            function (event) {
+
+                const targetId =
+                    link.getAttribute(
+                        "href"
+                    );
+
+
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) {
+
+                    return;
+
+                }
+
+
+                const target =
+                    document.querySelector(
+                        targetId
+                    );
+
+
+                if (!target) {
+
+                    return;
+
+                }
+
+
+                event.preventDefault();
+
+
+                const headerHeight =
+                    header.offsetHeight;
+
+
+                const targetPosition =
+                    target.getBoundingClientRect().top +
+                    window.scrollY -
+                    headerHeight -
+                    15;
+
+
+                window.scrollTo({
+
+                    top: targetPosition,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+        );
+
+    }
+);
